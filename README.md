@@ -68,6 +68,32 @@ plt.legend()
 plt.grid(True)
 plt.show()
 
+or
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+# Example customer dataset (replace with actual data)
+data = pd.read_csv("Mall_Customers.csv")
+df = pd.DataFrame(data)
+# Preprocessing: Drop the 'CustomerID' and 'Gender' columns and scale the features
+X = df.drop(['CustomerID', 'Gender'], axis=1)
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+# Apply KMeans clustering
+kmeans = KMeans(n_clusters=3, random_state=42)
+df['Cluster'] = kmeans.fit_predict(X_scaled)
+# Display the clustered groups
+print("Customer Segments:\n", df)
+plt.figure(figsize=(8, 6))
+plt.scatter(X_scaled[:, 0], X_scaled[:, 1], c=df['Cluster'], cmap='viridis')
+plt.xlabel('Age')
+plt.ylabel('Annual Income')
+plt.title('Customer Segments based on Age and Annual Income')
+plt.show()
+
 ```
 
 ## Output:
